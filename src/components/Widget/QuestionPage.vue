@@ -11,20 +11,7 @@ const currentPage = computed(() => guidanceStore.currentPage);
 
 <template>
   <div class="page-container">
-    <div v-if="guidanceStore.answeredQuestions.length > 0" class="answered-section">
-      <h2 class="section-title">Previously Answered</h2>
-      <QuestionCard
-        v-for="question in guidanceStore.answeredQuestions"
-        :key="question.id"
-        :question="question"
-        :answer="guidanceStore.answers[question.id]?.value"
-        class="answered-question"
-        @click="guidanceStore.goToQuestion(question.id)"
-      />
-    </div>
-    
     <div class="current-questions">
-      <h2 class="section-title">Current Questions</h2>
       <QuestionCard
         v-for="question in currentPage?.questions"
         :key="question.id"

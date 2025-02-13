@@ -8,8 +8,6 @@ import TextEnumerated from "./questions/TextEnumerated.vue";
 const props = defineProps<{
   question: GuidedQuestion;
 }>();
-
-const handleAnswerUpdate = (value: Object) => {};
 </script>
 
 <template>
@@ -17,21 +15,17 @@ const handleAnswerUpdate = (value: Object) => {};
   <FreeformText
     v-if="props.question.answerType === AnswerType.FreeformText"
     :question="props.question"
-    @update="handleAnswerUpdate"
   />
   <FreeformNumeric
     v-if="props.question.answerType === AnswerType.FreeformNumeric"
     :question="props.question"
-    @update="handleAnswerUpdate"
   />
   <ImageEnumerated
     v-if="props.question.answerType === AnswerType.ImageEnumerated"
     :question="props.question"
-    @update="handleAnswerUpdate"
   />
   <TextEnumerated
     v-if="props.question.answerType === AnswerType.TextEnumerated"
     :question="props.question"
-    @update="handleAnswerUpdate"
   />
 </template>

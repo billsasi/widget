@@ -1,5 +1,10 @@
-# Vue 3 + TypeScript + Vite
+# Interactive Guidance Widget
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+An embeddable guidance widget that solves user needs asking questions.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Demo
+
+1. Install dependencies: `npm install`
+2. Run the development server: `npm run dev`
+3. Build the library: `npm run build:lib`
+4. Run the demo: `npm run preview`

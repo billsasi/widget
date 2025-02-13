@@ -1,9 +1,15 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue";
+import { onMounted, ref } from "vue";
 import QuestionPage from "./QuestionPage.vue";
 import { useGuidanceStore } from "../../stores/guidance-store";
+import AnswersMenu from "./AnswersMenu.vue";
+
+const props = defineProps<{
+  logoUrl?: string;
+}>();
 
 const guidanceStore = useGuidanceStore();
+const isAnswersMenuOpen = ref(false);
 
 onMounted(async () => {
   await guidanceStore.fetchQuestions();
@@ -12,12 +18,28 @@ onMounted(async () => {
 
 <template>
   <div class="widget-container">
+    <div class="widget-toolbar">
+      <button class="toolbar-button" @click="isAnswersMenuOpen = true">
+        View Answered
+      </button>
+      <img
+        v-if="props.logoUrl"
+        :src="props.logoUrl"
+        class="toolbar-logo"
+        alt="Logo"
+      />
+    </div>
+
     <div v-if="guidanceStore.loading" class="loading-overlay">
       <div class="loading-spinner"></div>
     </div>
+
+    <AnswersMenu v-if="isAnswersMenuOpen" @close="isAnswersMenuOpen = false" />
+
     <div class="widget-content">
       <QuestionPage v-if="!guidanceStore.loading" />
     </div>
+
     <div class="navigation">
       <button
         @click="guidanceStore.goToPrevPage"
@@ -120,5 +142,42 @@ button.disabled {
     height: 100vh;
     border-radius: 0;
   }
+}
+
+.widget-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+  background: white;
+  border-radius: 16px 16px 0 0;
+}
+
+.toolbar-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: none;
+  background: none;
+  color: #4a5568;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.toolbar-button:hover {
+  color: var(--primary-color, #4a90e2);
+}
+
+.toolbar-logo {
+  height: 24px;
+  width: auto;
+  object-fit: contain;
+}
+
+.icon {
+  font-size: 1.25rem;
 }
 </style>

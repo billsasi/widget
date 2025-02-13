@@ -1,4 +1,4 @@
-import { AnswerType, type GuidedQuestion, type Page } from "../types";
+import { AnswerType, type Page } from "../types";
 
 const questions: Array<Page> = [
   {
