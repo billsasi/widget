@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guidance Widget Demo</title>
+    <title>Widget Demo</title>
     <link rel="stylesheet" href="./guidance-widget.css">
     <style>
         .container {
@@ -28,14 +28,12 @@
     <script src="./guidance-widget.umd.js"></script>
     <script>
         console.log('Script loaded');
-        console.log('Window.GuidanceWidget:', window.GuidanceWidget);
         
         if (window.GuidanceWidget && window.GuidanceWidget.init) {
             console.log('Initializing widget...');
             window.GuidanceWidget.init('guidance-widget');
-            console.log('Widget initialized');
         } else {
-            console.error('GuidanceWidget not properly loaded:', window.GuidanceWidget);
+            console.error('widget not properly loaded:', window.GuidanceWidget);
         }
     </script>
 </body>

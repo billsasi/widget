@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import QuestionPage from "./QuestionPage.vue";
 import { useGuidanceStore } from "../../stores/guidance-store";
 import AnswersMenu from "./AnswersMenu.vue";
+import StartPage from "./widget-pages/StartPage.vue";
+import SolutionPage from "./widget-pages/SolutionPage.vue";
 
 const props = defineProps<{
   logoUrl?: string;
@@ -10,16 +12,16 @@ const props = defineProps<{
 
 const guidanceStore = useGuidanceStore();
 const isAnswersMenuOpen = ref(false);
-
-onMounted(async () => {
-  await guidanceStore.fetchQuestions();
-});
 </script>
 
 <template>
   <div class="widget-container">
     <div class="widget-toolbar">
-      <button class="toolbar-button" @click="isAnswersMenuOpen = true">
+      <button
+        v-if="guidanceStore.currentPage"
+        class="toolbar-button"
+        @click="isAnswersMenuOpen = true"
+      >
         View Answered
       </button>
       <img
@@ -37,10 +39,12 @@ onMounted(async () => {
     <AnswersMenu v-if="isAnswersMenuOpen" @close="isAnswersMenuOpen = false" />
 
     <div class="widget-content">
-      <QuestionPage v-if="!guidanceStore.loading" />
+      <StartPage v-if="guidanceStore.currentState === 'start'" />
+      <QuestionPage v-if="guidanceStore.currentState === 'questions'" />
+      <SolutionPage v-if="guidanceStore.currentState === 'solution'" />
     </div>
 
-    <div class="navigation">
+    <div v-if="guidanceStore.currentState === 'questions'" class="navigation">
       <button
         @click="guidanceStore.goToPrevPage"
         :disabled="!guidanceStore.canGoBack"

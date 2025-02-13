@@ -1,21 +1,48 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { FreeformTextQuestion } from "../../../types";
+import { useGuidanceStore } from "../../../stores/guidance-store";
 
 const props = defineProps<{
   question: FreeformTextQuestion;
 }>();
 
-const handleChange = (e: Event) => {
-  const value = (e.target as HTMLTextAreaElement).value;
-  emit("update", value);
+const store = useGuidanceStore();
+const answer = ref("");
+const error = ref("");
+
+const validate = (value: string) => {
+  if (!value.trim()) {
+    error.value = "Please provide an answer";
+    return false;
+  }
+  if (value.length < 3) {
+    error.value = "Answer must be at least 3 characters long";
+    return false;
+  }
+  error.value = "";
+  return true;
 };
 
-const emit = defineEmits<{
-  (e: "update", value: string): void;
-}>();
+const handleChange = (e: Event) => {
+  const value = (e.target as HTMLTextAreaElement).value;
+  answer.value = value;
 
-const answer = ref("");
+  if (validate(value)) {
+    store.setAnswer(props.question.id, value);
+  }
+};
+
+watch(
+  () => store.answers[props.question.id]?.value,
+  (newValue) => {
+    if (newValue) {
+      answer.value = newValue;
+      validate(newValue);
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <template>
@@ -23,10 +50,13 @@ const answer = ref("");
     <div class="input-wrapper">
       <textarea
         v-model="answer"
+        @input="handleChange"
         rows="6"
         class="form-input"
+        :class="{ error: error }"
         placeholder="Enter your answer here..."
       ></textarea>
+      <span v-if="error" class="error-message">{{ error }}</span>
     </div>
   </div>
 </template>
@@ -65,5 +95,16 @@ const answer = ref("");
 .form-input:focus {
   border-color: var(--primary-color, #4a90e2);
   box-shadow: 0 0 0 2px var(--primary-color, #4a90e2);
+}
+
+.form-input.error {
+  border-color: #e53e3e;
+}
+
+.error-message {
+  display: block;
+  color: #e53e3e;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
 }
 </style>

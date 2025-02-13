@@ -7,15 +7,20 @@ const props = defineProps<{
   question: ImageEnumeratedQuestion;
 }>();
 
-const selectedAnswer = ref<string | null>(null);
-
 const store = useGuidanceStore();
+const selectedAnswer = ref<string | null>(null);
 
 watch(selectedAnswer, (newValue) => {
   if (newValue !== null) {
     store.setAnswer(props.question.id, newValue);
   }
 });
+
+watch(() => store.answers[props.question.id]?.value, (newValue) => {
+  if (newValue) {
+    selectedAnswer.value = newValue;
+  }
+}, { immediate: true });
 </script>
 
 <template>

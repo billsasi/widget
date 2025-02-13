@@ -4,7 +4,7 @@
       <input
         type="number"
         @input="handleChange"
-        :value="answer"
+        v-model="answer"
         class="form-input"
         :class="{ error: error }"
         placeholder="Enter a number..."
@@ -21,10 +21,10 @@ import { useGuidanceStore } from "../../../stores/guidance-store";
 
 const props = defineProps<{
   question: FreeformNumericQuestion;
-  answer?: string;
 }>();
 
 const store = useGuidanceStore();
+const answer = ref("");
 const error = ref("");
 
 const validateNumber = (value: string) => {
@@ -41,18 +41,21 @@ const validateNumber = (value: string) => {
   return true;
 };
 
-const handleChange = (e: Event) => {
-  const value = (e.target as HTMLInputElement).value;
-  if (validateNumber(value)) {
-    store.setAnswer(props.question.id, Number(value));
+const handleChange = () => {
+  if (validateNumber(answer.value)) {
+    store.setAnswer(props.question.id, Number(answer.value));
   }
 };
 
 watch(
-  () => props.answer,
+  () => store.answers[props.question.id]?.value,
   (newValue) => {
-    if (newValue) validateNumber(newValue);
-  }
+    if (newValue) {
+      answer.value = newValue;
+      validateNumber(newValue);
+    }
+  },
+  { immediate: true }
 );
 </script>
 

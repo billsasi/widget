@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import type { TextEnumeratedQuestion } from "../../../types";
 import { useGuidanceStore } from "../../../stores/guidance-store";
 
@@ -32,6 +32,12 @@ const handleSelect = (value: string) => {
   selectedAnswer.value = value;
   store.setAnswer(props.question.id, value);
 };
+
+watch(() => store.answers[props.question.id]?.value, (newValue) => {
+  if (newValue) {
+    selectedAnswer.value = newValue;
+  }
+}, { immediate: true });
 </script>
 
 <style scoped>

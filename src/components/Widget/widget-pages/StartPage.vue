@@ -1,0 +1,109 @@
+<script setup lang="ts">
+import { ref } from "vue";
+import { useGuidanceStore } from "../../../stores/guidance-store";
+
+const guidanceStore = useGuidanceStore();
+const problemDescription = ref("");
+const isSubmitting = ref(false);
+
+const handleSubmit = async () => {
+  if (!problemDescription.value.trim()) return;
+
+  isSubmitting.value = true;
+  try {
+    await guidanceStore.submitProblemDescription(problemDescription.value);
+  } finally {
+    isSubmitting.value = false;
+  }
+};
+</script>
+
+<template>
+  <div class="start-page">
+    <h2 class="subtitle">What can I help you with today?</h2>
+
+    <div class="input-container">
+      <textarea
+        v-model="problemDescription"
+        placeholder="Tell us about your problem..."
+        :disabled="isSubmitting"
+        rows="6"
+        class="problem-input"
+      ></textarea>
+
+      <button
+        @click="handleSubmit"
+        :disabled="!problemDescription.trim() || isSubmitting"
+        class="submit-button"
+      >
+        <span v-if="isSubmitting">Loading...</span>
+        <span v-else>Get Started</span>
+      </button>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.start-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 32px 16px;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a202c;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.subtitle {
+  color: #4a5568;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.problem-input {
+  width: 100%;
+  padding: 16px;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 150px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.problem-input:focus {
+  border-color: var(--primary-color, #4a90e2);
+  box-shadow: 0 0 0 2px var(--primary-color, #4a90e2);
+}
+
+.submit-button {
+  padding: 12px 24px;
+  background-color: var(--primary-color, #4a90e2);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.submit-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.submit-button:not(:disabled):hover {
+  opacity: 0.9;
+}
+</style>

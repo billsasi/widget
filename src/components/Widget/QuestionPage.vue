@@ -16,7 +16,6 @@ const currentPage = computed(() => guidanceStore.currentPage);
         v-for="question in currentPage?.questions"
         :key="question.id"
         :question="question"
-        :answer="guidanceStore.answers[question.id]?.value"
       />
     </div>
   </div>
