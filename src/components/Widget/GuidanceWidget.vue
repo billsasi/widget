@@ -90,12 +90,12 @@ provide("guidanceServices", props.services);
   background-color: #fbfbfb;
   border-radius: var(--border-radius);
   border: 1px solid #dfdfdf;
-  height: 80vh;
-  width: 80vw;
-  max-width: 1200px;
-  max-height: 800px;
-  min-width: 600px;
-  min-height: 400px;
+  height: 100%;
+  width: 100%;
+  max-width: 900px;
+  max-height: 700px;
+  min-width: 300px;
+  min-height: 300px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
   font-family: var(--font-family);
@@ -169,8 +169,11 @@ button.disabled {
 @media (max-width: 840px) {
   .widget-container {
     width: 100%;
-    height: 100vh;
-    border-radius: 0;
+    height: 100%;
+    max-height: 100%;
+    min-height: unset;
+    min-width: unset;
+    border-radius: 8px;
   }
 }
 

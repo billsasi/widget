@@ -1,9 +1,26 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { onMounted } from "vue";
 import GuidanceWidget from "./components/Widget/GuidanceWidget.vue";
+import type { SolutionRequest } from "./services/solution-service";
 import { useGuidanceStore } from "./stores/guidance-store";
+import type { Page } from "./types";
 
 const guidanceStore = useGuidanceStore();
+
+const props = defineProps<{
+  logoUrl?: string;
+  services?: {
+    getQuestions?: () => Promise<Page[]>;
+    generateSolution?: (request: SolutionRequest) => Promise<string>;
+    submitFeedback?: (isHelpful: boolean, text?: string) => Promise<void>;
+  };
+}>();
+
+onMounted(() => {
+  console.log("props", props);
+
+  console.log("props");
+});
 </script>
 
 <template>
@@ -22,7 +39,7 @@ const guidanceStore = useGuidanceStore();
       @click="guidanceStore.isWidgetOpen = false"
     >
       <div class="widget-modal" @click.stop>
-        <GuidanceWidget logo-url="/vite.svg" />
+        <GuidanceWidget :logo-url="logoUrl" :services="services" />
       </div>
     </div>
   </div>
@@ -76,5 +93,17 @@ const guidanceStore = useGuidanceStore();
   background: white;
   border-radius: var(--border-radius);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  width: 90vw;
+  max-width: 900px;
+  max-height: 80vh;
+  margin: 20px;
+}
+
+@media (max-width: 768px) {
+  .widget-modal {
+    width: 95vw;
+    margin: 10px;
+    max-height: 90vh;
+  }
 }
 </style>

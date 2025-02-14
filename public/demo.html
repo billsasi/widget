@@ -11,12 +11,27 @@
             max-width: 1200px;
             margin: 40px auto;
             padding: 20px;
+            width: 90vw; 
         }
         
         #guidance-widget {
-            min-height: 400px;
-            min-width: 600px;
+            width: 90vw; 
+            max-width: 900px;
+            min-height: 300px;
             margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            #guidance-widget {
+                width: 95vw;
+                min-height: 250px;
+            }
+            
+            .container {
+                width: 95vw;
+                margin: 20px auto;
+                padding: 10px;
+            }
         }
 
         * {
@@ -27,7 +42,7 @@
 <body>
     <div class="container">
         <h1>Guidance Widget Demo</h1>
-        <h3>Click the Open Widget button on the side of the pagefor interactive assistance.</h3>
+        <h3>Click the Open Widget button on the side of the page for interactive assistance.</h3>
         <div id="guidance-widget"></div>
     </div>
 
@@ -38,6 +53,7 @@
         if (window.GuidanceWidget && window.GuidanceWidget.init) {
             console.log('init widget');
             window.GuidanceWidget.init('guidance-widget', {
+            logoUrl: 'vue.svg',
             styles: {
                 primaryColor: '#4a90e2',
                 fontFamily: 'Inter, system-ui, sans-serif',

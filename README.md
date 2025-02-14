@@ -56,3 +56,16 @@ interface WidgetConfig {
   };
 }
 ```
+
+## Using a custom configuration
+
+```ts
+window.GuidanceWidget.init("guidance-widget", {
+  styles: {
+    primaryColor: "#4a90e2",
+    fontFamily: "Inter, system-ui, sans-serif",
+    fontSize: "16px",
+    borderRadius: "8px",
+  },
+});
+```

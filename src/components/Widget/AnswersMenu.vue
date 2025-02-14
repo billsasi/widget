@@ -73,6 +73,37 @@ const allQuestions = computed(() => {
   flex-direction: column;
 }
 
+@media (max-width: 768px) {
+  .menu-content {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .question-item {
+    padding: 10px;
+    margin-bottom: 6px;
+  }
+
+  .menu-header {
+    padding-bottom: 12px;
+  }
+
+  .questions-list {
+    height: calc(100vh - 100px);
+    padding: 8px 0;
+  }
+
+  .question-item {
+    padding: 10px;
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+  }
+
+  .answer-preview {
+    font-size: 0.85rem;
+  }
+}
+
 .menu-header {
   display: flex;
   justify-content: space-between;
