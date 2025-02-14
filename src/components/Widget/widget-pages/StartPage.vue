@@ -22,7 +22,7 @@ const handleSubmit = async () => {
 <template>
   <div class="start-page">
     <div class="top">
-      <img v-if="true" :src="`/vue.svg`" class="logo" alt="Logo" />
+      <img v-if="logoUrl" :src="logoUrl" class="logo" alt="Logo" />
       <h1 class="subtitle">What can I help you with today?</h1>
     </div>
 
