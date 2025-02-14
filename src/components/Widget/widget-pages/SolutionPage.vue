@@ -1,10 +1,18 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import { useGuidanceStore } from "../../../stores/guidance-store";
 
 const guidanceStore = useGuidanceStore();
+const showFeedbackText = ref(false);
+const feedbackText = ref("");
 
 const handleFeedback = async (isHelpful: boolean) => {
-  await guidanceStore.submitFeedback(isHelpful);
+  showFeedbackText.value = true;
+};
+
+const submitFeedback = async (isHelpful: boolean) => {
+  await guidanceStore.submitFeedbackResponse(isHelpful, feedbackText.value);
+  showFeedbackText.value = false;
 };
 </script>
 
@@ -17,14 +25,40 @@ const handleFeedback = async (isHelpful: boolean) => {
     </div>
 
     <div v-if="!guidanceStore.feedbackSubmitted" class="feedback-section">
-      <p class="feedback-question">Was this solution helpful?</p>
-      <div class="feedback-buttons">
+      <p v-if="!showFeedbackText" class="feedback-question">
+        Was this solution helpful?
+      </p>
+      <div v-if="!showFeedbackText" class="feedback-buttons">
         <button @click="handleFeedback(true)" class="feedback-button positive">
-          Yes, it helped
+          Yes
         </button>
         <button @click="handleFeedback(false)" class="feedback-button negative">
-          No, not really
+          No
         </button>
+      </div>
+
+      <div v-else class="feedback-text-section">
+        <p class="feedback-prompt">Would you like to tell us more?</p>
+        <textarea
+          v-model="feedbackText"
+          class="feedback-textarea"
+          placeholder="Your feedback helps us improve..."
+          rows="4"
+        ></textarea>
+        <div class="feedback-submit-buttons">
+          <button
+            @click="submitFeedback(true)"
+            class="feedback-button positive"
+          >
+            Submit Feedback
+          </button>
+          <button
+            @click="showFeedbackText = false"
+            class="feedback-button secondary"
+          >
+            Skip
+          </button>
+        </div>
       </div>
     </div>
 
@@ -98,27 +132,47 @@ const handleFeedback = async (isHelpful: boolean) => {
   border: none;
 }
 
+.feedback-button.secondary {
+  background-color: #e2e8f0;
+  color: #4a5568;
+  border: none;
+}
+
 .feedback-submitted {
   text-align: center;
   color: #48bb78;
   margin-bottom: 32px;
 }
 
-.start-over-button {
-  display: block;
+.feedback-text-section {
+  max-width: 600px;
   margin: 0 auto;
-  padding: 12px 24px;
-  background: none;
-  border: 2px solid var(--primary-color, #4a90e2);
-  color: var(--primary-color, #4a90e2);
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s ease;
 }
 
-.start-over-button:hover {
-  background: var(--primary-color, #4a90e2);
-  color: white;
+.feedback-prompt {
+  margin-bottom: 12px;
+  color: #4a5568;
+}
+
+.feedback-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.feedback-textarea:focus {
+  outline: none;
+  border-color: var(--primary-color, #4a90e2);
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.feedback-submit-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
 }
 </style>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Widget Demo</title>
     <link rel="stylesheet" href="./guidance-widget.css">
+    <link rel="stylesheet" href="./widget.css">
     <style>
         .container {
             max-width: 1200px;
@@ -13,15 +14,20 @@
         }
         
         #guidance-widget {
-            border: 1px dashed #ccc;
-            min-height: 200px;
+            min-height: 400px;
+            min-width: 600px;
             margin: 20px 0;
+        }
+
+        * {
+            font-family: 'Inter', sans-serif;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Guidance Widget Demo</h1>
+        <h3>Click the Open Widget button on the side of the pagefor interactive assistance.</h3>
         <div id="guidance-widget"></div>
     </div>
 
@@ -30,10 +36,17 @@
         console.log('Script loaded');
         
         if (window.GuidanceWidget && window.GuidanceWidget.init) {
-            console.log('Initializing widget...');
-            window.GuidanceWidget.init('guidance-widget');
+            console.log('init widget');
+            window.GuidanceWidget.init('guidance-widget', {
+            styles: {
+                primaryColor: '#4a90e2',
+                fontFamily: 'Inter, system-ui, sans-serif',
+                fontSize: '16px',
+                borderRadius: '8px'
+            }
+        });
         } else {
-            console.error('widget not properly loaded:', window.GuidanceWidget);
+            console.error('widget not loaded:', window.GuidanceWidget);
         }
     </script>
 </body>

@@ -98,9 +98,11 @@ const allQuestions = computed(() => {
 .question-item {
   padding: 12px;
   border: 1px solid #e2e8f0;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   margin-bottom: 8px;
   cursor: pointer;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
 }
 
 .question-item:hover {
@@ -108,7 +110,7 @@ const allQuestions = computed(() => {
 }
 
 .question-item.answered {
-  border-left: 3px solid var(--primary-color, #4a90e2);
+  border-left: 3px solid var(--primary-color);
 }
 
 .question-text {

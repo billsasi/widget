@@ -1,0 +1,17 @@
+
+
+.widget-container {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+}
+
+.widget-container button {
+  font-family: var(--font-family);
+  border-radius: var(--border-radius);
+}
+
+.widget-container input,
+.widget-container textarea {
+  font-family: var(--font-family);
+  border-radius: var(--border-radius);
+}

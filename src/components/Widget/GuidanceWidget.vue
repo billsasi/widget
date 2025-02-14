@@ -1,29 +1,49 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, provide } from "vue";
 import QuestionPage from "./QuestionPage.vue";
 import { useGuidanceStore } from "../../stores/guidance-store";
 import AnswersMenu from "./AnswersMenu.vue";
 import StartPage from "./widget-pages/StartPage.vue";
 import SolutionPage from "./widget-pages/SolutionPage.vue";
+import type { Page } from "../../types";
+import type { SolutionRequest } from "../../services/solution-service";
 
 const props = defineProps<{
   logoUrl?: string;
+  services?: {
+    getQuestions?: () => Promise<Page[]>;
+    generateSolution?: (request: SolutionRequest) => Promise<string>;
+    submitFeedback?: (isHelpful: boolean, text?: string) => Promise<void>;
+  };
 }>();
 
 const guidanceStore = useGuidanceStore();
 const isAnswersMenuOpen = ref(false);
+
+provide("guidanceServices", props.services);
 </script>
 
 <template>
   <div class="widget-container">
     <div class="widget-toolbar">
-      <button
-        v-if="guidanceStore.currentPage"
-        class="toolbar-button"
-        @click="isAnswersMenuOpen = true"
-      >
-        View Answered
-      </button>
+      <div class="toolbar-buttons">
+        <button
+          class="close-button"
+          @click="guidanceStore.isWidgetOpen = false"
+        >
+          ×
+        </button>
+        <button
+          v-if="
+            guidanceStore.currentPage &&
+            guidanceStore.currentState === 'questions'
+          "
+          class="toolbar-button"
+          @click="isAnswersMenuOpen = true"
+        >
+          View Answered
+        </button>
+      </div>
       <img
         v-if="props.logoUrl"
         :src="props.logoUrl"
@@ -67,14 +87,19 @@ const isAnswersMenuOpen = ref(false);
 .widget-container {
   display: flex;
   flex-direction: column;
-  padding: 16px;
   background-color: #fbfbfb;
-  border-radius: 16px;
+  border-radius: var(--border-radius);
   border: 1px solid #dfdfdf;
-  height: 600px;
-  width: 800px;
+  height: 80vh;
+  width: 80vw;
+  max-width: 1200px;
+  max-height: 800px;
+  min-width: 600px;
+  min-height: 400px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
 }
 
 .widget-content {
@@ -118,6 +143,7 @@ const isAnswersMenuOpen = ref(false);
   display: flex;
   justify-content: space-between;
   margin-top: auto;
+  margin: 0 16px 16px 16px;
 }
 
 button {
@@ -183,5 +209,28 @@ button.disabled {
 
 .icon {
   font-size: 1.25rem;
+}
+
+.close-button {
+  width: 30px;
+  height: 30px;
+  font-size: 1.5em;
+  color: gray;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.close-button:hover {
+  opacity: 0.9;
+}
+
+.toolbar-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 </style>

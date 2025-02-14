@@ -5,6 +5,61 @@ An embeddable guidance widget that solves user needs asking questions.
 ## Demo
 
 1. Install dependencies: `npm install`
-2. Run the development server: `npm run dev`
-3. Build the library: `npm run build:lib`
-4. Run the demo: `npm run preview`
+2. Build widget: `npm run build:lib`
+3. Copy built files to public folder:
+
+```bash
+cp dist/guidance-widget.umd.js public/guidance-widget.umd.js
+cp dist/guidance-widget.css public/guidance-widget.css
+cp dist/widget.css public/widget.css
+```
+
+4. Serve the demo page: `npx serve public`
+5. Open the demo page: `http://localhost:3000/demo.html`
+
+## Features
+
+- Prompt user for problem, ask them several questions (freeform text, numeric, multiple choice, images) presented as pages. Generates a recommended solution based on the answers.
+- Customizable primary color, font family, font size, and border radius
+- Customizable handlers for generating questions, generating a solution, and accepting feedback
+- Answered tab to easily see all previous questions and answers
+- Easy to embed and customize
+
+## Usage
+
+1. Include container in markup:
+
+```html
+<div id="guidance-widget"></div>
+```
+
+2. Initialize the widget:
+
+```html
+<script src="./guidance-widget.umd.js"></script>
+<script>
+  window.GuidanceWidget.init("guidance-widget");
+</script>
+```
+
+## Configuration
+
+This widget can be configured to display a custom logo on its top right corner.
+Users can also customize the primary color, font family, font size, and border radius of UI elements. In the optional services object, users can provide custom code for generating questions from the problem provided, generating a solution based on all question answers, and accepting feedback from the user.
+
+```ts
+interface WidgetConfig {
+  logoUrl?: string;
+  styles?: {
+    primaryColor?: string;
+    fontFamily?: string;
+    fontSize?: string;
+    borderRadius?: string;
+  };
+  services?: {
+    getQuestions?: () => Promise<Page[]>;
+    generateSolution?: (request: SolutionRequest) => Promise<string>;
+    submitFeedback?: (isHelpful: boolean, text?: string) => Promise<void>;
+  };
+}
+```

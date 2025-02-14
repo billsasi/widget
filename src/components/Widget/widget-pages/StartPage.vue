@@ -62,6 +62,8 @@ const handleSubmit = async () => {
   color: #4a5568;
   text-align: center;
   margin-bottom: 24px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
 }
 
 .input-container {
@@ -74,8 +76,9 @@ const handleSubmit = async () => {
   width: 100%;
   padding: 16px;
   border: 2px solid #e2e8f0;
-  border-radius: 12px;
-  font-size: 1rem;
+  border-radius: var(--border-radius);
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
   resize: vertical;
   min-height: 150px;
   outline: none;
@@ -83,8 +86,8 @@ const handleSubmit = async () => {
 }
 
 .problem-input:focus {
-  border-color: var(--primary-color, #4a90e2);
-  box-shadow: 0 0 0 2px var(--primary-color, #4a90e2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .submit-button {
@@ -92,8 +95,10 @@ const handleSubmit = async () => {
   background-color: var(--primary-color, #4a90e2);
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--border-radius);
   font-weight: 600;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
   cursor: pointer;
   transition: all 0.2s ease;
 }

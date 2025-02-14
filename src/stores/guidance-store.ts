@@ -1,12 +1,21 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
-import { getQuestions } from "../services/question-service";
-import { generateSolution, submitFeedback } from "../services/solution-service";
+import { ref, computed, inject } from "vue";
+import { getQuestions as defaultGetQuestions } from "../services/question-service";
+import {
+  generateSolution as defaultGenerateSolution,
+  submitFeedback as defaultSubmitFeedback,
+} from "../services/solution-service";
 import type { Page, Answer } from "../types";
 
 type State = "start" | "questions" | "solution";
 
 export const useGuidanceStore = defineStore("guidance", () => {
+  const services = inject("guidanceServices", {
+    getQuestions: defaultGetQuestions,
+    generateSolution: defaultGenerateSolution,
+    submitFeedback: defaultSubmitFeedback,
+  });
+
   const currentState = ref<State>("start");
   const problemDescription = ref("");
   const questions = ref<Page[]>([]);
@@ -16,6 +25,7 @@ export const useGuidanceStore = defineStore("guidance", () => {
   const feedbackSubmitted = ref(false);
   const solution = ref("");
   const feedback = ref<{ isHelpful: boolean; text?: string } | null>(null);
+  const isWidgetOpen = ref(false);
 
   const currentPage = computed(() => questions.value[pageIndex.value]);
 
@@ -68,7 +78,7 @@ export const useGuidanceStore = defineStore("guidance", () => {
   async function fetchQuestions() {
     loading.value = true;
     try {
-      questions.value = await getQuestions();
+      questions.value = await services.getQuestions();
     } finally {
       loading.value = false;
     }
@@ -84,7 +94,7 @@ export const useGuidanceStore = defineStore("guidance", () => {
   async function generateSolutionForAnswers() {
     loading.value = true;
     try {
-      solution.value = await generateSolution({
+      solution.value = await services.generateSolution({
         problemDescription: problemDescription.value,
         answers: answers.value,
       });
@@ -122,7 +132,7 @@ export const useGuidanceStore = defineStore("guidance", () => {
   async function submitFeedbackResponse(isHelpful: boolean, text?: string) {
     loading.value = true;
     try {
-      await submitFeedback(isHelpful, text);
+      await services.submitFeedback(isHelpful, text);
       feedback.value = { isHelpful, text };
       feedbackSubmitted.value = true;
     } finally {
@@ -160,6 +170,7 @@ export const useGuidanceStore = defineStore("guidance", () => {
     canGoBack,
     canGoForward,
     answeredQuestions,
+    isWidgetOpen,
     goToNextPage,
     goToPrevPage,
     goToQuestion,

@@ -33,11 +33,15 @@ const handleSelect = (value: string) => {
   store.setAnswer(props.question.id, value);
 };
 
-watch(() => store.answers[props.question.id]?.value, (newValue) => {
-  if (newValue) {
-    selectedAnswer.value = newValue;
-  }
-}, { immediate: true });
+watch(
+  () => store.answers[props.question.id]?.value,
+  (newValue) => {
+    if (newValue) {
+      selectedAnswer.value = newValue;
+    }
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped>
@@ -60,25 +64,28 @@ watch(() => store.answers[props.question.id]?.value, (newValue) => {
   width: 100%;
   padding: 16px;
   border: 2px solid #e2e8f0;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   cursor: pointer;
   transition: all 0.2s ease;
   background: white;
   text-align: left;
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
 }
 
 .answer-option:hover {
-  box-shadow: 0 4px 20px rgba(74, 144, 226, 0.15);
+  border-color: var(--primary-color);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
 }
 
 .answer-option.selected {
-  border-color: var(--primary-color, #4a90e2);
-  box-shadow: 0 0 0 2px var(--primary-color, #4a90e2);
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .answer-text {
   color: #1a202c;
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   font-weight: 500;
 }
 </style>

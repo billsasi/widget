@@ -76,12 +76,12 @@ watch(
   width: 100%;
   padding: 16px;
   border: 2px solid #e2e8f0;
-  border-radius: 12px;
+  border-radius: var(--border-radius);
   outline: none;
   resize: vertical;
   min-height: 150px;
-  font-size: 1rem;
-  font-family: "Inter", sans-serif;
+  font-size: var(--font-size-base);
+  font-family: var(--font-family);
   line-height: 1.5;
   color: #1a202c;
   transition: all 0.2s ease;
