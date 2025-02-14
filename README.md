@@ -1,6 +1,6 @@
 # Interactive Guidance Widget
 
-An embeddable guidance widget that solves user needs asking questions.
+An embeddable guidance widget that solves a user's questions by asking multiple choice and freeform questions.
 
 ## Demo
 
