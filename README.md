@@ -6,16 +6,9 @@ An embeddable guidance widget that solves user needs asking questions.
 
 1. Install dependencies: `npm install`
 2. Build widget: `npm run build:lib`
-3. Copy built files to public folder:
 
-```bash
-cp dist/guidance-widget.umd.js public/guidance-widget.umd.js
-cp dist/guidance-widget.css public/guidance-widget.css
-cp dist/widget.css public/widget.css
-```
-
-4. Serve the demo page: `npx serve public`
-5. Open the demo page: `http://localhost:3000/demo.html`
+3. Serve the demo page: `npx serve public`
+4. Open the demo page: `http://localhost:3000/demo.html`
 
 ## Features
 
