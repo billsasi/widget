@@ -6,9 +6,11 @@ An embeddable guidance widget that solves user needs asking questions.
 
 1. Install dependencies: `npm install`
 2. Build widget: `npm run build:lib`
-
 3. Serve the demo page: `npx serve public`
 4. Open the demo page: `http://localhost:3000/demo.html`
+
+<img src="public/images/demo/mobile1.png" alt="Mobile view" width="250">
+<img src="public/images/demo/mobile2.png" alt="Mobile view" width="250">
 
 ## Features
 
@@ -69,3 +71,17 @@ window.GuidanceWidget.init("guidance-widget", {
   },
 });
 ```
+
+## Screenshots
+
+<img src="public/images/demo/demo1.png" alt="Initial view of the widget" width="400">
+<br>Initial view of the widget
+
+<img src="public/images/demo/demo2.png" alt="Widget in action" width="400">
+<br>Widget in action showing the chat interface
+
+<img src="public/images/demo/demo3.png" alt="Completed interaction" width="400">
+<br>Example of a completed interaction
+
+<img src="public/images/demo/mobile2.png" alt="Mobile view" width="250">
+<br>Responsive design on mobile

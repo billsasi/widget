@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, inject } from "vue";
 import { useGuidanceStore } from "../../../stores/guidance-store";
 
 const guidanceStore = useGuidanceStore();
 const problemDescription = ref("");
 const isSubmitting = ref(false);
+const logoUrl = inject<string | undefined>("logoUrl");
 
 const handleSubmit = async () => {
   if (!problemDescription.value.trim()) return;
@@ -20,7 +21,10 @@ const handleSubmit = async () => {
 
 <template>
   <div class="start-page">
-    <h2 class="subtitle">What can I help you with today?</h2>
+    <div class="top">
+      <img v-if="true" :src="`/vue.svg`" class="logo" alt="Logo" />
+      <h1 class="subtitle">What can I help you with today?</h1>
+    </div>
 
     <div class="input-container">
       <textarea
@@ -50,6 +54,22 @@ const handleSubmit = async () => {
   padding: 32px 16px;
 }
 
+.top {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.top img {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  margin-left: 16px;
+  margin-bottom: 16px;
+}
+
 .title {
   font-size: 1.5rem;
   font-weight: 600;
@@ -63,7 +83,6 @@ const handleSubmit = async () => {
   text-align: center;
   margin-bottom: 24px;
   font-family: var(--font-family);
-  font-size: var(--font-size-base);
 }
 
 .input-container {
@@ -110,5 +129,14 @@ const handleSubmit = async () => {
 
 .submit-button:not(:disabled):hover {
   opacity: 0.9;
+}
+
+@media (max-width: 840px) {
+  .start-page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 }
 </style>

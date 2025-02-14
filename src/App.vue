@@ -92,18 +92,24 @@ onMounted(() => {
   position: relative;
   background: white;
   border-radius: var(--border-radius);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  width: 90vw;
-  max-width: 900px;
-  max-height: 80vh;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  max-height: 700px;
+  min-width: 300px;
+  min-height: 500px;
   margin: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 840px) {
   .widget-modal {
-    width: 95vw;
-    margin: 10px;
-    max-height: 90vh;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    min-height: unset;
+    min-width: unset;
+    margin: 0px;
+    border-radius: 8px;
   }
 }
 </style>

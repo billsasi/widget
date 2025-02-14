@@ -21,6 +21,7 @@ const guidanceStore = useGuidanceStore();
 const isAnswersMenuOpen = ref(false);
 
 provide("guidanceServices", props.services);
+provide("logoUrl", props.logoUrl);
 </script>
 
 <template>
@@ -92,10 +93,10 @@ provide("guidanceServices", props.services);
   border: 1px solid #dfdfdf;
   height: 100%;
   width: 100%;
-  max-width: 900px;
+  max-width: 600px;
   max-height: 700px;
   min-width: 300px;
-  min-height: 300px;
+  min-height: 500px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   position: relative;
   font-family: var(--font-family);
